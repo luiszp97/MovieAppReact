@@ -5,6 +5,9 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
 import { getApiData } from '../helpers/getApiData'
 import { PageLayout } from '../layout/PageLayout'
+import { Navbar, Footer } from '../ui/components';
+import { LoadingPage } from './LoadingPage';
+
 
 
 const StyledText = styled(Typography) (({theme})=>({
@@ -59,19 +62,16 @@ export const CategoiesPage = () => {
     }, [query])
 
     genres !== null && (info = genres[(genres.findIndex(element => element.id === parseFloat(query)))]) ; 
-    
-    console.log(info)
-    
-    
 
   return (
     <PageLayout>
+        <Navbar/>
 
         {
             genres === null
-            ? <h1>Loading</h1>
+            ?<LoadingPage/>
             :<Box sx={{padding:'0 10px'}}> 
-            <Stack padding={2} spacing={3} direction='row' sx={{overflowX:'scroll',     '::-webkit-scrollbar': {background:'#0000', borderRadius:'8px', height:'10px'},
+            <Stack padding={2} spacing={3} direction='row' sx={{overflowX:'scroll', '::-webkit-scrollbar': {background:'#0000', borderRadius:'8px', height:'10px'},
                 '::-webkit-scrollbar-thumb': {background:'#ffffff35', borderRadius:'8px'},}}>
                 {genres.map(genre => (
                     <Box key={genre.id}>
@@ -99,18 +99,14 @@ export const CategoiesPage = () => {
                     </Grid>
                 ))
 
-                }
-                
-
-                
+                }  
                 
             </Grid>
-            </Box>  
-
+            </Box> 
                
         }
 
-
+        <Footer/>
     </PageLayout>
   )
 }

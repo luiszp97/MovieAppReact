@@ -1,9 +1,7 @@
-import { Route, Routes } from "react-router-dom"
-import { CategoiesPage } from "../pages/CategoiesPage"
-import { DetailsPage } from "../pages/DetailsPage"
-import { HomePage } from "../pages/HomePage"
-import { SearchPage } from "../pages/SearchPage"
-import { Navbar } from "../ui/components/Navbar"
+import { Navigate, Route, Routes } from "react-router-dom"
+import { CategoiesPage, HomePage, DetailsPage, SearchPage } from "../pages"
+
+
 
 
 export const AppRoutes = () => {
@@ -14,6 +12,7 @@ export const AppRoutes = () => {
         <Route path="/tv/:id" element={<DetailsPage type='tv'/>}/>
         <Route path="/search/:query" element={<SearchPage/>}/>
         <Route path="/categories/:query" element={<CategoiesPage/>}/>
+        <Route path ='/*' element={ <Navigate to='/home' /> } />
     </Routes>
   )
 }

@@ -11,7 +11,8 @@ import { FlexBox } from "../theme/purpleTheme";
 import { ScrollBarMovies } from "../components/ScrollBarMovies";
 import { Categories } from "../components/Categories";
 import { Genres } from "../components/Genres";
-import { localData } from "../helpers/localData";
+import { Footer, Navbar } from "../ui/components";
+import { LoadingPage } from "./LoadingPage";
 
 export const HomePage = () => {
 
@@ -40,11 +41,11 @@ export const HomePage = () => {
         
         const getFav = ()=>{
 
-            const data = JSON.parse(localStorage.getItem('fav'))
+            const data = JSON.parse(localStorage.getItem('fav'));
             setFav(data)
            
         }
-
+ 
         
         getTrending();
         getGenres();
@@ -52,8 +53,6 @@ export const HomePage = () => {
         getFav();
 
     }, [])
-
-    console.log(fav)
 
     const handleSubmit = (e)=>{
         e.preventDefault();
@@ -63,6 +62,11 @@ export const HomePage = () => {
 
   return (
     <PageLayout>
+       {
+        tranding === null 
+        ? <LoadingPage/>
+        :<>
+        <Navbar/>
 
         <FlexBox flexDirection='column'>
 
@@ -90,7 +94,7 @@ export const HomePage = () => {
 
         </FlexBox>
 
-        <ScrollBarMovies data= {tranding} title={'Most Popular Movies'} movieName={true}/>
+        <ScrollBarMovies data= {tranding} title={'Most Popular Movies'} type={'movie'} movieName={true}/>
 
         <Categories/>
 
@@ -98,8 +102,11 @@ export const HomePage = () => {
 
         <Genres data={genres}/>
 
-        <ScrollBarMovies title={'Your favorites'} data={fav !== null ? fav.reverse() : null} movieName={false} type={'tv'} />
-
+        <ScrollBarMovies title={'Your favorites'} data={fav !== null ? fav.reverse() : null} movieName={false} type={'fav'} />
+        
+        <Footer/>
+        </>
+       }
     </PageLayout>
   )
 }

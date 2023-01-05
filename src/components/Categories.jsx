@@ -46,7 +46,7 @@ export const Categories = () => {
             <Typography color="primary.white">Theater</Typography>
         </StyledBox>
 
-        <StyledBox component='a'>
+        <StyledBox component='a' href = '#fav'>
             <LocalMoviesIcon fontSize="large" sx={{color:'primary.white'}}/>
             <Typography textAlign='center' color="primary.white">Your favorites</Typography>
         </StyledBox>

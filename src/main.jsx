@@ -10,9 +10,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   // <React.StrictMode>
   <BrowserRouter>
     <AppTheme>
-      <Navbar/>
-        <AppRoutes />
-      <Footer/>
+        <AppRoutes />    
     </AppTheme>
   </BrowserRouter>
   // </React.StrictMode>,

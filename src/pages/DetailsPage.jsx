@@ -9,6 +9,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 import { getApiData, localData } from "../helpers";
 import { PageLayout } from "../layout/PageLayout"
 import { FlexBox } from "../theme/purpleTheme"
+import { LoadingPage } from "./LoadingPage";
 
 
 
@@ -32,15 +33,19 @@ export const DetailsPage = ({type}) => {
     const [actors , setActors] = useState(null);
     const [fav , setFav] = useState(null);
 
+    const favoriteData = JSON.parse(localStorage.getItem('fav'));
+
+
     const addToFav = ()=>{
         localData(datos)
-        setFav(!isFavorite)
+        setFav(!fav)
     }
 
     useEffect(()=> {
 
         const getData = async() =>{
             const data = await getApiData(`${type}/${id}`);
+            
             setDatos(data)
         }
 
@@ -48,20 +53,36 @@ export const DetailsPage = ({type}) => {
             const {cast} = await getApiData(`${type}/${id}/credits`);
             setActors(cast)
         }
+
+        const getFav = ()=>{
+
+            if(favoriteData !== null){
+                const isFavorite = favoriteData.some(element => element.id === parseFloat(id));
+                setFav(isFavorite)
+            }
+        }
                 
-        getData()
-        getCast()
+        getData();
+        getCast();
+        getFav();
+
     }, [])
 
-    const favoriteData = JSON.parse(localStorage.getItem('fav'));
-    const isFavorite = favoriteData.some(element => element.id === parseFloat(id))      
+   if(datos !== null){
 
+        const isAMovie = datos.seasons === undefined
+        setDatos
+
+   }
+
+   
+   
   return (
     <PageLayout>
         <FlexBox sx={{minHeight:'100vh', padding:'15px 0'}}>
             {
                 datos === null || actors === null
-                ? <h1>Loading </h1>
+                ? <LoadingPage/>
                 :<Card sx={{height:"100%", borderRadius:'40px', width:{sm:'60%', xs:'90%'},boxShadow: "0px 4px 8px rgb(0 0 0 / 45%)", border:'1px solid black'}}>
                     <Box sx={{ height:{sm:'40vh', xs:'30vh'}, overflow:'hidden', position:'relative'}}>
                         <IconButton onClick={()=> navigate('/home')} sx={{position:'absolute', backgroundColor:'primary.smoothIcons', top:'10px', left:'10px', ':hover': {backgroundColor:'#ffffff69'}}}>
@@ -110,7 +131,7 @@ export const DetailsPage = ({type}) => {
                     </StyledText>
 
                     {
-                        isFavorite
+                        fav
                         ?<FavoriteIcon onClick={addToFav} fontSize="small" sx={{color:'primary.white', cursor:'pointer'}}/>
                         :<FavoriteBorderIcon onClick={addToFav} fontSize="small" sx={{color:'primary.white', cursor:'pointer'}} />
 
